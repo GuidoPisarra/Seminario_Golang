@@ -11,35 +11,45 @@ type Result struct {
 	Length int
 }
 
+type caracter interface {
+	cumple(r Result)
+}
+
 func main() {
-	c := "AA0431234"
+	c := "NN0431A3"
 	var r Result
-	r.Length = obtieneCantidad(c, 3, 4)
-	r.Value = obtenerCadena(c, r.Length)
-	r.Type = c[0:2]
-	fmt.Println(r.Length)
-	fmt.Println(r.Value)
-	fmt.Println(r.Type)
+	r = crearResul(c)
+	fmt.Println(r)
 
 }
 
-func obtieneCantidad(cadena string, inicio int, fin int) int {
-	var cant string
-	var c int
-	for i := 0; i < len(cadena); i++ {
-		if (i >= inicio-1) && (i <= fin-1) {
-			cant += string(cadena[i])
+func crearResul(cadena string) Result {
+	var o Result
+	o.Type = cadena[0:2]
 
+	o.Length, _ = strconv.Atoi(cadena[2:4])
+	o.Value = cadena[4:]
+	cumple(o)
+
+	return o
+}
+
+func compruebaTipo(t string) bool {
+	return (t == "NN" || t == "TX")
+}
+
+func cumple(v interface{}) bool {
+	s := v.(Result)
+	d := s.Value
+
+	if s.Type == "NN" {
+		gr, ok := strconv.Atoi(d)
+		if ok == nil {
+			fmt.Println(s)
+		} else {
+			fmt.Println("no es numero", gr)
 		}
 	}
-	c, _ = strconv.Atoi(cant)
-	return c
-}
 
-func obtenerCadena(cadena string, cant int) string {
-	var valor string
-	for i := 0; i < cant; i++ {
-		valor += string(cadena[i+5])
-	}
-	return valor
+	return true /* r.Length-4 == len(r.Value) */
 }
