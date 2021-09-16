@@ -7,6 +7,7 @@ import (
 )
 
 func main() {
+
 	c := "TX02AA"
 	var res model.Result
 	var err error
@@ -14,10 +15,8 @@ func main() {
 	r, err = res.CrearResult(c)
 	if err == nil {
 		fmt.Println(r)
+	} else {
+		fmt.Println(err)
 	}
 
-}
-
-func cumple(v interface{}) (bool, error) {
-	return true, nil
 }
