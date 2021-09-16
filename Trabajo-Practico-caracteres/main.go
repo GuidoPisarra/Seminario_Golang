@@ -7,12 +7,14 @@ import (
 )
 
 func main() {
+	var cad string
 
-	c := "TX02AA"
+	fmt.Print("Ingrese una cadena ")
+	fmt.Scan(&cad)
 	var res model.Result
 	var err error
 	var r *model.Result
-	r, err = res.CrearResult(c)
+	r, err = res.CrearResult(cad)
 	if err == nil {
 		fmt.Println(r)
 	} else {

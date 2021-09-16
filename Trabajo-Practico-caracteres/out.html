@@ -72,7 +72,7 @@
 		<pre class="file" id="file0" style="display: none">package model
 
 import (
-        "fmt"
+        "errors"
         "strconv"
 )
 
@@ -82,37 +82,45 @@ type Result struct {
         Length int
 }
 
-type Caracter interface {
-        cumple(r Result) (*Result, error)
-}
+func (c *Result) CrearResult(cadena string) (*Result, error) {
+        t, err1 := compruebaTipo(cadena[0:2], cadena[4:])
+        l, err2 := strconv.Atoi(cadena[2:4])
+        v := cadena[4:]
+        k, err3 := lon(l, v)
+        if err1 == nil &amp;&amp; err2 == nil &amp;&amp; err3 == nil {
+                r := NewResul</span><span class="cov8" title="1">t(t, v, k)
+                return &amp;r, nil
+        }
+        r</span>eturn &amp;Result{"", "", 0}, errors.New("no valid")
+}<span class="cov8" title="1">
 
-func (c *Result) CrearResult(cadena string) (*Result, error) <span class="cov8" title="1">{
-        t, err := compruebaTipo(cadena[0:2])
-        if err != nil </span><span class="cov8" title="1">{
-                t = ""
-                return &amp;Result{}, fmt.Errorf("this is an %s error", "no valid")
-        }</span>
-        <span class="cov8" title="1">l, err := strconv.Atoi(cadena[2:4])
-        if err != nil </span><span class="cov8" title="1">{
-                l = 0
-                return &amp;Result{}, fmt.Errorf("this is an %s error", "no valid")
-        }</span>
-        <span class="cov8" title="1">v := cadena[4:]
-        r := NewResult(t, v, l)
-        return &amp;r, nil</span>
+</span>func lon(l int, v string) (int, error) {
+        if l == len(v) {
+                </span>return l, nil
+        <span class="cov8" title="1">}
+        return 0, errors.New("no valid")
 }
-
-func compruebaTipo(t string) (string, error) <span class="cov8" title="1">{
-        if t == "NN" || t == "TX" </span><span class="cov8" title="1">{
+</span>
+func compruebaTipo(t string, c string) (string, error) {
+        if t == "NN" {
+                _, err := strconv.Atoi(c)</span><span class="cov8" title="1">
+                if err == nil {
+                </span>        return t, err
+        <span class="cov8" title="1">        }
+</span>                t = ""
+                return t, err
+        }
+        if t == "TX" {
                 return t, nil
-        }</span>
-        <span class="cov8" title="1">return t, fmt.Errorf("this is an %s error", "no valid")</span>
+        </span>}
+
+        return t, errors.New("no valid")
 
 }
 
-func NewResult(typ string, value string, length int) Result <span class="cov8" title="1">{
+func NewResult(typ string, value string, length int) Result {
         return Result{typ, value, length}
-}</span>
+}
 </pre>
 		
 		</div>
